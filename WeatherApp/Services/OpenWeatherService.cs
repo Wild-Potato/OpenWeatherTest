@@ -22,7 +22,7 @@ namespace WeatherApp.Services
             OWCurrentWeaterModel currentWeaterModel = await owp.GetCurrentWeatherAsync();
             WindDataModel windDataModel = new WindDataModel();
 
-            windDataModel.DateTime = DateTime.FromBinary(currentWeaterModel.DateTime);
+            windDataModel.DateTime = DateTime.UnixEpoch.AddSeconds(currentWeaterModel.DateTime);
             windDataModel.Direction = currentWeaterModel.Wind.Deg;
             windDataModel.MetrePerSec = currentWeaterModel.Wind.Speed;
 

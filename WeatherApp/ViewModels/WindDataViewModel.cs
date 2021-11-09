@@ -1,17 +1,36 @@
-﻿using WeatherApp.Commands;
+﻿using System.ComponentModel;
+using WeatherApp.Commands;
 using WeatherApp.Models;
 using WeatherApp.Services;
 
 namespace WeatherApp.ViewModels
 {
-    public class WindDataViewModel
+    public class WindDataViewModel : BaseViewModel
     {
         public IWindDataService WindDataService { get; set; }
         public DelegateCommand<string> GetDataCommand { get; set; }
-        public WindDataModel CurrentData { get; set; }
+        private WindDataModel currentData;
+
+        public WindDataModel CurrentData
+        {
+            get => currentData;
+
+            set { currentData=value; OnPropertyChanged(); }
+        }
 
         public double KPHtoMPS(double kph) => kph * 1.0 / 36.0;
         public double MPStoKPH(double mps) => mps * 3.6;
+
+        private async void getData(string s)
+        {
+           CurrentData = await WindDataService.GetDataAsync();
+        }
+        public WindDataViewModel()
+        {
+            WindDataService = new OpenWeatherService(AppConfiguration.GetValue("ApiKey"));
+
+            GetDataCommand = new DelegateCommand<string>(getData);
+        }
         
 
     }

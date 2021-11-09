@@ -7,7 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
-        <Button DockPanel.Dock="Top" Content="Load content TODO"/>
-        <TextBox Text="TODO"/>
+        <Button DockPanel.Dock="Top" Content="Load content TODO" Command="{Binding GetDataCommand}"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" Text="{Binding CurrentData.DateTime, Mode=OneWay}"/>
+            <TextBox Grid.Row="1" Text="{Binding CurrentData.MetrePerSec, Mode=OneWay}"/>
+            <TextBox Grid.Row="2" Text="{Binding CurrentData.Direction, Mode=OneWay}"/>
+            
+        </Grid>
     </DockPanel>
 </Window>
