@@ -5,7 +5,7 @@ using WeatherApp.Models;
 
 namespace WeatherApp.ViewModels
 {
-    public class TemperatureViewModel : BaseViewModel
+    public class WindDataViewModel : BaseViewModel
     {
         private TemperatureModel currentTemp;
 
@@ -33,7 +33,7 @@ namespace WeatherApp.ViewModels
             }
         }
 
-        public TemperatureViewModel()
+        public WindDataViewModel()
         {
             GetTempCommand = new DelegateCommand<string>(GetTemp, CanGetTemp);
         }
