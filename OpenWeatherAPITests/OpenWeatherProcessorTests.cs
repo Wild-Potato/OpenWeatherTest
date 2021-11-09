@@ -6,7 +6,7 @@ namespace OpenWeatherAPITests
 {
     public class OpenWeatherProcessorTests
     {
-        
+        //Tous les test sont complétés
         [Fact]
         public async void GetOneCallAsync_IfApiKeyEmptyOrNull_ThrowArgumentException()
         {
