@@ -50,23 +50,30 @@ namespace OpenWeatherAPI
         /// <returns></returns>
         public async Task<OpenWeatherOneCallModel> GetOneCallAsync()
         {
+            if (ApiKey == null || ApiKey == "")
+            {
+                throw new ArgumentException("ApiKey est vide ou null  ");
+            }
+            else
+            {
+                EndPoint = $"/onecall?";
+
+                /// Src : https://stackoverflow.com/a/14517976/503842
+                var uriBuilder = new UriBuilder($"{BaseURL}{EndPoint}");
+
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                query["lat"] = Latitude; // Shawinigan
+                query["lon"] = Longitude;
+                query["units"] = "metric";
+                query["appid"] = ApiKey;
+
+
+                uriBuilder.Query = query.ToString();
+                longUrl = uriBuilder.ToString();
+
+                return await doOneCall();
+            }
             
-            EndPoint = $"/onecall?";
-
-            /// Src : https://stackoverflow.com/a/14517976/503842
-            var uriBuilder = new UriBuilder($"{BaseURL}{EndPoint}");
-
-            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["lat"] = Latitude; // Shawinigan
-            query["lon"] = Longitude;
-            query["units"] = "metric";
-            query["appid"] = ApiKey;
-
-
-            uriBuilder.Query = query.ToString();
-            longUrl = uriBuilder.ToString();
-
-            return await doOneCall();
         }
 
         /// <summary>
