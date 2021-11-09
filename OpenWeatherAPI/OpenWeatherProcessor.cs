@@ -82,20 +82,27 @@ namespace OpenWeatherAPI
         /// <returns></returns>
         public async Task<OWCurrentWeaterModel> GetCurrentWeatherAsync()
         {
-            EndPoint = $"/weather?";
+            if (ApiKey == null || ApiKey == "")
+            {
+                throw new ArgumentException("ApiKey est vide ou null  ");
+            }
+            else
+            {
+                EndPoint = $"/weather?";
 
-            /// Src : https://stackoverflow.com/a/14517976/503842
-            var uriBuilder = new UriBuilder($"{BaseURL}{EndPoint}");
+                /// Src : https://stackoverflow.com/a/14517976/503842
+                var uriBuilder = new UriBuilder($"{BaseURL}{EndPoint}");
 
-            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["q"] = "Shawinigan"; // Shawinigan
-            query["units"] = "metric";
-            query["appid"] = ApiKey;
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                query["q"] = "Shawinigan"; // Shawinigan
+                query["units"] = "metric";
+                query["appid"] = ApiKey;
 
-            uriBuilder.Query = query.ToString();
-            longUrl = uriBuilder.ToString();
+                uriBuilder.Query = query.ToString();
+                longUrl = uriBuilder.ToString();
 
-            return await doCurrentWeatherCall();
+                return await doCurrentWeatherCall();
+            }
         }
 
         private async Task<OpenWeatherOneCallModel> doOneCall()
